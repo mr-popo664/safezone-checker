@@ -1,0 +1,2243 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safe-Zone Overlay Checker — TikTok, Reels &amp; Shorts</title>
+  <meta name="description" content="Free client-side 9:16 safe-zone overlay checker for TikTok, Instagram Reels, and YouTube Shorts. Preview captions, test frames, and export PNG guides." />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="SafeZone Checker — mohit-tools.com" />
+  <meta property="og:title" content="Safe-Zone Overlay Checker — TikTok, Reels &amp; Shorts" />
+  <meta property="og:description" content="Free client-side 9:16 safe-zone overlay checker for TikTok, Instagram Reels, and YouTube Shorts. Preview captions, test frames, and export PNG guides." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Safe-Zone Overlay Checker — TikTok, Reels &amp; Shorts" />
+  <meta name="twitter:description" content="Free client-side 9:16 safe-zone overlay checker for TikTok, Instagram Reels, and YouTube Shorts. Preview captions, test frames, and export PNG guides." />
+
+  <!-- Structured Data: WebApplication + FAQPage JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Safe-Zone Overlay Checker",
+        "url": "https://mohit-tools.com/",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "All",
+        "description": "Free 100% client-side 9:16 safe-zone overlay checker for TikTok, Instagram Reels, and YouTube Shorts. Preview vertical images and videos, compare UI overlays side-by-side, and export PNG safe-zone guides.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "mohit-tools.com"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a safe zone in TikTok, Instagram Reels, and YouTube Shorts?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A safe zone is the unobstructed central region of a 9:16 vertical video where captions, titles, faces, and call-to-action graphics remain completely visible without being covered by platform UI elements such as top navigation tabs, right-side engagement buttons, or bottom captions and audio bars."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are the exact safe-zone dimensions for a 1080×1920 vertical video?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For a standard 1080×1920 px frame, TikTok reserves 11% (211 px) at the top, 20% (384 px) at the bottom, and 15% (162 px) on the right action bar. Instagram Reels reserves 10% (192 px) top, 18% (346 px) bottom, and 14% (151 px) right. YouTube Shorts reserves 9% (173 px) top, 19% (365 px) bottom, and 15% (162 px) right. Keeping graphics inside the Universal Safe Box (896×1325 px) guarantees visibility across all three platforms."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I use the exported PNG safe-zone overlay in CapCut or Premiere Pro?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Click Export Check PNG to download a 1080×1920 guide image. Drop that PNG onto a top video track in CapCut, Adobe Premiere Pro, or DaVinci Resolve, set its blend mode or lower its opacity if needed while positioning subtitles and B-roll, and then disable or delete the guide track before final export."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are my videos or images uploaded to a server when using this tool?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. SafeZone Checker runs 100% locally inside your browser using HTML5 FileReader, Object URLs, video elements, and Canvas APIs. Your images and videos never leave your device."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why should I check the Universal Safe Box when cross-posting to all three platforms?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Each short-form app places its buttons, tabs, and caption scrims at slightly different heights and widths. Enabling the Universal Safe Box highlights the strictest shared unobstructed rectangle across TikTok, Instagram Reels, and YouTube Shorts so one master edit looks clean everywhere without re-rendering separate versions."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Google Analytics GA4 -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  -->
+
+  <!-- Google AdSense Verification Script -->
+  <!--
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+          crossorigin="anonymous"></script>
+  -->
+
+  <!-- Synchronous Theme Initialization (Defaults to Dark Mode, prevents FOUC) -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('safezone_theme');
+        if (saved === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN with class-based Dark Mode -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+          },
+          colors: {
+            obsidian: {
+              950: '#0B0E14',
+              900: '#111622',
+              850: '#161C2B',
+              800: '#1D2538',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      color-scheme: light;
+    }
+    html.dark {
+      color-scheme: dark;
+    }
+
+    /* Subtle studio transparency / alignment grid for empty 9:16 stage */
+    .stage-grid-bg {
+      background-color: #090c12;
+      background-image:
+        linear-gradient(to right, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Custom range slider styling */
+    input[type="range"].studio-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    input[type="range"].studio-slider::-webkit-slider-runnable-track {
+      height: 6px;
+      border-radius: 9999px;
+      background: #cbd5e1;
+    }
+    html.dark input[type="range"].studio-slider::-webkit-slider-runnable-track {
+      background: #273248;
+    }
+    input[type="range"].studio-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 16px;
+      width: 16px;
+      border-radius: 9999px;
+      background: #2563eb;
+      border: 2px solid #ffffff;
+      margin-top: -5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+      transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    input[type="range"].studio-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+    }
+    input[type="range"].studio-slider::-moz-range-track {
+      height: 6px;
+      border-radius: 9999px;
+      background: #cbd5e1;
+    }
+    html.dark input[type="range"].studio-slider::-moz-range-track {
+      background: #273248;
+    }
+    input[type="range"].studio-slider::-moz-range-thumb {
+      height: 16px;
+      width: 16px;
+      border-radius: 9999px;
+      background: #2563eb;
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Spinning vinyl animation for TikTok disc */
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin-disc {
+      animation: spinSlow 6s linear infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .animate-spin-disc {
+        animation: none;
+      }
+    }
+
+    /* Smooth theme surface transition */
+    body, header, aside, main, footer, .theme-surface {
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    /* Dropzone active state */
+    .dropzone-active {
+      border-color: #3b82f6 !important;
+      background-color: rgba(59, 130, 246, 0.08) !important;
+    }
+
+    /* Phone stage container sizing */
+    .phone-frame-single {
+      width: 100%;
+      max-width: 396px;
+      aspect-ratio: 9 / 16;
+    }
+    .phone-frame-grid {
+      width: 100%;
+      max-width: 340px;
+      aspect-ratio: 9 / 16;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 dark:bg-obsidian-950 dark:text-slate-100 font-sans antialiased selection:bg-blue-500/20 selection:text-blue-400">
+
+  <!-- =====================================================================
+       TOP NAVIGATION BAR (Strictly Logo/Title on Left + Theme Toggle on Right)
+       ===================================================================== -->
+  <header class="sticky top-0 z-40 border-b border-slate-200 dark:border-slate-800/90 bg-white/90 dark:bg-obsidian-950/90 backdrop-blur-md">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <svg class="w-7 h-7 text-blue-600 dark:text-blue-500 shrink-0" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="24" height="24" rx="6" stroke="currentColor" stroke-width="2" />
+          <path d="M9 11V8.5C9 8.22386 9.22386 8 9.5 8H12M16 8H18.5C18.7761 8 19 8.22386 19 8.5V11M19 17V19.5C19 19.7761 18.7761 20 18.5 20H16M12 20H9.5C9.22386 20 9 19.7761 9 19.5V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <rect x="11.5" y="11" width="5" height="6" rx="1" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="1.5" />
+        </svg>
+        <span class="text-base sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white whitespace-nowrap shrink-0">
+          SafeZone Checker
+        </span>
+      </div>
+
+      <button
+        id="themeToggleBtn"
+        type="button"
+        aria-label="Toggle light or dark theme"
+        title="Toggle light or dark theme"
+        class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-100 hover:bg-slate-200 dark:bg-obsidian-900 dark:hover:bg-obsidian-800 text-slate-700 dark:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 transition-colors shrink-0"
+      >
+        <!-- Sun icon (shown in Dark Mode) -->
+        <svg id="iconSun" class="w-5 h-5 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+        </svg>
+        <!-- Moon icon (shown in Light Mode) -->
+        <svg id="iconMoon" class="w-5 h-5 block dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hidden master video element for 100% client-side frame decoding -->
+  <video id="masterVideo" class="hidden" playsinline loop preload="auto"></video>
+
+  <!-- =====================================================================
+       MAIN 2-COLUMN WORKSPACE
+       ===================================================================== -->
+  <main class="flex-1 w-full max-w-[1440px] mx-auto px-4 sm:px-6 py-6 sm:py-8">
+    <div class="flex flex-col lg:flex-row items-start gap-6 xl:gap-8">
+
+      <!-- =================================================================
+           LEFT SIDEBAR: WORKSPACE CONTROLS
+           ================================================================= -->
+      <aside class="w-full lg:w-[360px] xl:w-[380px] shrink-0 flex flex-col gap-5">
+        <div class="theme-surface rounded-xl border border-slate-200 dark:border-slate-800/90 bg-white dark:bg-obsidian-900 p-5 flex flex-col gap-5">
+
+          <!-- Title & Intro -->
+          <div class="flex flex-col gap-1">
+            <h1 class="text-lg font-semibold tracking-tight text-slate-900 dark:text-white" style="text-wrap: balance;">
+              9:16 Safe-Zone Inspector
+            </h1>
+            <p class="text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+              Verify captions, faces, and CTAs against TikTok, Reels, and Shorts UI zones locally in your browser.
+            </p>
+          </div>
+
+          <!-- Media Dropzone -->
+          <div class="flex flex-col gap-2.5">
+            <label
+              id="dropzone"
+              for="fileInput"
+              tabindex="0"
+              class="group relative flex flex-col items-center justify-center text-center rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 bg-slate-50/70 dark:bg-obsidian-950/60 px-4 py-5 cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            >
+              <input
+                id="fileInput"
+                type="file"
+                accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime,.jpg,.jpeg,.png,.webp,.mp4,.webm,.mov"
+                class="sr-only"
+              />
+              <svg class="w-7 h-7 text-slate-400 dark:text-slate-500 group-hover:text-blue-500 transition-colors mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+              <span class="text-sm font-medium text-slate-800 dark:text-slate-200">
+                Drop vertical image or video
+              </span>
+              <span class="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
+                JPG, PNG, WEBP, MP4, WEBM, MOV · Client-side only
+              </span>
+            </label>
+
+            <!-- Inline error message -->
+            <p id="mediaError" class="hidden text-xs text-red-600 dark:text-red-400 font-medium" role="alert"></p>
+
+            <!-- Unboxed file metadata line -->
+            <div id="mediaMetaRow" class="hidden items-center justify-between gap-2 text-xs text-slate-600 dark:text-slate-400 px-0.5">
+              <span id="mediaFilename" class="truncate font-medium text-slate-800 dark:text-slate-200"></span>
+              <span id="mediaDimensions" class="font-mono tabular-nums shrink-0 text-[11px]"></span>
+            </div>
+
+            <!-- Sample Frame & Clear Actions -->
+            <div class="grid grid-cols-2 gap-2.5">
+              <button
+                id="loadSampleBtn"
+                type="button"
+                class="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 dark:bg-obsidian-800 dark:hover:bg-slate-700/80 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              >
+                <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect width="18" height="18" x="3" y="3" rx="2" />
+                  <circle cx="9" cy="9" r="2" />
+                  <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                </svg>
+                <span>Load Sample Frame</span>
+              </button>
+
+              <button
+                id="clearMediaBtn"
+                type="button"
+                disabled
+                class="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium bg-white dark:bg-obsidian-950/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-obsidian-800 disabled:opacity-40 disabled:pointer-events-none transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              >
+                <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                </svg>
+                <span>Clear / New File</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Video Frame Scrubber Controls (shown only when a video is loaded) -->
+          <div id="videoControlsPanel" class="hidden flex-col gap-2.5 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-700 dark:text-slate-200">Video Frame Scrubber</span>
+              <span id="videoTimeReadout" class="text-xs font-mono tabular-nums text-slate-500 dark:text-slate-400">00:00.0 / 00:00.0</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <button
+                id="videoPlayPauseBtn"
+                type="button"
+                aria-label="Play or pause video"
+                class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              >
+                <svg id="playIcon" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <polygon points="6 3 20 12 6 21 6 3" />
+                </svg>
+                <svg id="pauseIcon" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <rect x="6" y="4" width="4" height="16" rx="1" />
+                  <rect x="14" y="4" width="4" height="16" rx="1" />
+                </svg>
+              </button>
+              <input
+                id="videoScrubber"
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value="0"
+                aria-label="Scrub video timeline"
+                class="studio-slider flex-1"
+              />
+            </div>
+          </div>
+
+          <hr class="border-slate-200 dark:border-slate-800" />
+
+          <!-- View Mode Toggle -->
+          <div class="flex flex-col gap-2">
+            <span class="text-xs font-semibold text-slate-700 dark:text-slate-200">View Mode</span>
+            <div class="grid grid-cols-2 gap-1 p-1 rounded-lg bg-slate-100 dark:bg-obsidian-950 border border-slate-200 dark:border-slate-800">
+              <button
+                type="button"
+                data-view-mode="single"
+                class="view-mode-btn px-3 py-2 rounded-md text-xs font-medium transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              >
+                Single Platform
+              </button>
+              <button
+                type="button"
+                data-view-mode="comparison"
+                class="view-mode-btn px-3 py-2 rounded-md text-xs font-medium transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              >
+                Side-by-Side (3x)
+              </button>
+            </div>
+          </div>
+
+          <!-- Overlay Style Switcher -->
+          <div class="flex flex-col gap-2">
+            <span class="text-xs font-semibold text-slate-700 dark:text-slate-200">Overlay Style</span>
+            <div class="flex flex-col gap-1.5" role="radiogroup" aria-label="Overlay Style">
+              <button
+                type="button"
+                data-overlay-style="red"
+                class="overlay-style-btn flex items-center justify-between px-3 py-2.5 rounded-lg border text-left text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              >
+                <span>Red Danger Zones</span>
+                <span class="text-[11px] font-normal opacity-75">Masks &amp; Labels</span>
+              </button>
+              <button
+                type="button"
+                data-overlay-style="mockup"
+                class="overlay-style-btn flex items-center justify-between px-3 py-2.5 rounded-lg border text-left text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              >
+                <span>Realistic UI Mockup</span>
+                <span class="text-[11px] font-normal opacity-75">Feed Icons &amp; Text</span>
+              </button>
+              <button
+                type="button"
+                data-overlay-style="hybrid"
+                class="overlay-style-btn flex items-center justify-between px-3 py-2.5 rounded-lg border text-left text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              >
+                <span>Hybrid Mode</span>
+                <span class="text-[11px] font-normal opacity-75">Masks + UI Outlines</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Overlay Opacity Slider -->
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <label for="opacitySlider" class="text-xs font-semibold text-slate-700 dark:text-slate-200">
+                Overlay Opacity
+              </label>
+              <span id="opacityReadout" class="text-xs font-mono tabular-nums text-slate-600 dark:text-slate-300">
+                38%
+              </span>
+            </div>
+            <input
+              id="opacitySlider"
+              type="range"
+              min="15"
+              max="90"
+              step="1"
+              value="38"
+              class="studio-slider w-full"
+            />
+          </div>
+
+          <!-- Universal Safe Box Toggle -->
+          <div class="flex items-center justify-between gap-3 py-1">
+            <div class="flex flex-col">
+              <span class="text-xs font-semibold text-slate-700 dark:text-slate-200">Universal Safe Box</span>
+              <span class="text-[11px] text-slate-500 dark:text-slate-400">Common clear area across all 3 apps</span>
+            </div>
+            <button
+              id="universalSafeToggle"
+              type="button"
+              role="switch"
+              aria-checked="false"
+              aria-label="Toggle Universal Safe Box"
+              class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-300 dark:bg-slate-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            >
+              <span
+                id="universalSafeKnob"
+                class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform translate-x-0"
+              ></span>
+            </button>
+          </div>
+
+          <!-- Export Check PNG Button -->
+          <button
+            id="exportPngBtn"
+            type="button"
+            class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white shadow-sm transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-obsidian-900"
+          >
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            <span>Export Check PNG</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- =================================================================
+           RIGHT STAGE: 9:16 PREVIEW CANVAS (SINGLE OR 3x COMPARISON)
+           ================================================================= -->
+      <section class="flex-1 min-w-0 w-full flex flex-col gap-4">
+
+        <!-- Stage Top Bar (Platform Tabs in Single View, or Comparison Summary in 3x View) -->
+        <div class="theme-surface rounded-xl border border-slate-200 dark:border-slate-800/90 bg-white dark:bg-obsidian-900 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+          <div id="singlePlatformTabs" class="flex items-center gap-1 p-1 rounded-lg bg-slate-100 dark:bg-obsidian-950 border border-slate-200 dark:border-slate-800">
+            <button
+              type="button"
+              data-platform="tiktok"
+              class="platform-tab-btn px-3.5 py-1.5 rounded-md text-xs font-semibold transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            >
+              TikTok
+            </button>
+            <button
+              type="button"
+              data-platform="reels"
+              class="platform-tab-btn px-3.5 py-1.5 rounded-md text-xs font-semibold transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            >
+              Instagram Reels
+            </button>
+            <button
+              type="button"
+              data-platform="shorts"
+              class="platform-tab-btn px-3.5 py-1.5 rounded-md text-xs font-semibold transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            >
+              YouTube Shorts
+            </button>
+          </div>
+
+          <div id="comparisonHeaderLabel" class="hidden items-center gap-2">
+            <span class="text-sm font-semibold text-slate-900 dark:text-white">Side-by-Side Platform Comparison</span>
+          </div>
+
+          <div id="activeSpecSummary" class="text-xs font-mono tabular-nums text-slate-500 dark:text-slate-400">
+            Top 11% · Right 15% (42–82%) · Bottom 20%
+          </div>
+        </div>
+
+        <!-- Preview Stage Surface -->
+        <div class="theme-surface rounded-xl border border-slate-200 dark:border-slate-800/90 bg-white dark:bg-obsidian-900 p-4 sm:p-6 lg:p-8 flex items-center justify-center min-h-[580px]">
+
+          <!-- SINGLE PLATFORM VIEW -->
+          <div id="singleViewContainer" class="w-full flex justify-center">
+            <div class="phone-frame-single relative rounded-[24px] overflow-hidden stage-grid-bg border border-slate-300 dark:border-slate-700/80 shadow-xl select-none">
+              <canvas id="previewCanvasSingle" width="1080" height="1920" class="w-full h-full block"></canvas>
+
+              <!-- Empty State Hint (sits behind overlays, disappears once media/sample loads) -->
+              <div id="emptyPromptSingle" class="absolute inset-0 flex flex-col items-center justify-center px-8 text-center pointer-events-none z-10">
+                <div class="rounded-xl bg-slate-950/80 backdrop-blur-sm border border-slate-700/70 px-5 py-4 max-w-[260px]">
+                  <p class="text-xs font-semibold text-white">9:16 Preview Stage</p>
+                  <p class="mt-1 text-[11px] leading-relaxed text-slate-300">
+                    Upload a vertical image/video or click <strong class="text-white">Load Sample Frame</strong> to test safe zones.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Active Platform Overlay Mount -->
+              <div id="overlaySingle" class="absolute inset-0 pointer-events-none z-20"></div>
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE COMPARISON VIEW (3-Column Synchronized Grid) -->
+          <div id="comparisonViewContainer" class="hidden w-full grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+            <!-- TikTok Column -->
+            <div class="w-full flex flex-col items-center gap-2.5">
+              <div class="w-full max-w-[340px] flex items-center justify-between px-1">
+                <span class="text-xs font-semibold text-slate-900 dark:text-white">TikTok</span>
+                <span class="text-[11px] font-mono tabular-nums text-slate-500 dark:text-slate-400">11% / 15% / 20%</span>
+              </div>
+              <div class="phone-frame-grid relative rounded-[20px] overflow-hidden stage-grid-bg border border-slate-300 dark:border-slate-700/80 shadow-lg select-none">
+                <canvas id="previewCanvasTikTok" width="1080" height="1920" class="w-full h-full block"></canvas>
+                <div id="overlayTikTok" class="absolute inset-0 pointer-events-none z-20"></div>
+              </div>
+            </div>
+
+            <!-- Instagram Reels Column -->
+            <div class="w-full flex flex-col items-center gap-2.5">
+              <div class="w-full max-w-[340px] flex items-center justify-between px-1">
+                <span class="text-xs font-semibold text-slate-900 dark:text-white">Instagram Reels</span>
+                <span class="text-[11px] font-mono tabular-nums text-slate-500 dark:text-slate-400">10% / 14% / 18%</span>
+              </div>
+              <div class="phone-frame-grid relative rounded-[20px] overflow-hidden stage-grid-bg border border-slate-300 dark:border-slate-700/80 shadow-lg select-none">
+                <canvas id="previewCanvasReels" width="1080" height="1920" class="w-full h-full block"></canvas>
+                <div id="overlayReels" class="absolute inset-0 pointer-events-none z-20"></div>
+              </div>
+            </div>
+
+            <!-- YouTube Shorts Column -->
+            <div class="w-full flex flex-col items-center gap-2.5">
+              <div class="w-full max-w-[340px] flex items-center justify-between px-1">
+                <span class="text-xs font-semibold text-slate-900 dark:text-white">YouTube Shorts</span>
+                <span class="text-[11px] font-mono tabular-nums text-slate-500 dark:text-slate-400">9% / 15% / 19%</span>
+              </div>
+              <div class="phone-frame-grid relative rounded-[20px] overflow-hidden stage-grid-bg border border-slate-300 dark:border-slate-700/80 shadow-lg select-none">
+                <canvas id="previewCanvasShorts" width="1080" height="1920" class="w-full h-full block"></canvas>
+                <div id="overlayShorts" class="absolute inset-0 pointer-events-none z-20"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- =================================================================
+         SEO GUIDE, DIMENSIONS REFERENCE & INTERACTIVE FAQ SECTION
+         ================================================================= -->
+    <section aria-label="9:16 Safe-Zone Guide and FAQ" class="mt-12 pt-10 border-t border-slate-200 dark:border-slate-800/90 space-y-12">
+
+      <!-- Section 1: How to Use the 9:16 Safe-Zone Overlay Checker -->
+      <div class="space-y-5">
+        <div class="max-w-2xl">
+          <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white" style="text-wrap: balance;">
+            How to Use the 9:16 Safe-Zone Overlay Checker
+          </h2>
+          <p class="mt-1.5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            Verify vertical framing, lower-third captions, and call-to-action graphics before publishing—processed 100% locally in your browser with zero server uploads.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <article class="theme-surface rounded-xl border border-slate-200 dark:border-slate-800/90 bg-white dark:bg-obsidian-900 p-5 flex flex-col gap-2">
+            <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
+              01. Load Image or Video Locally
+            </h3>
+            <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+              Drag and drop any vertical <span class="font-mono text-slate-800 dark:text-slate-200">JPG, PNG, WEBP, MP4, WEBM,</span> or <span class="font-mono text-slate-800 dark:text-slate-200">MOV</span> file—or click <strong>Load Sample Frame</strong>. Files are decoded directly in memory using HTML5 <span class="font-mono">FileReader</span> and <span class="font-mono">Canvas</span> without leaving your device.
+            </p>
+          </article>
+
+          <article class="theme-surface rounded-xl border border-slate-200 dark:border-slate-800/90 bg-white dark:bg-obsidian-900 p-5 flex flex-col gap-2">
+            <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
+              02. Compare Platforms &amp; Scrub Frames
+            </h3>
+            <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+              Switch between <strong>TikTok</strong>, <strong>Instagram Reels</strong>, and <strong>YouTube Shorts</strong> overlays—or turn on <strong>Side-by-Side (3x)</strong> view. For videos, use the inline Play/Pause toggle and timeline scrubber to inspect exact subtitle timestamps.
+            </p>
+          </article>
+
+          <article class="theme-surface rounded-xl border border-slate-200 dark:border-slate-800/90 bg-white dark:bg-obsidian-900 p-5 flex flex-col gap-2">
+            <h3 class="text-sm font-semibold text-slate-900 dark:text-white">
+              03. Export PNG Guide for Editors
+            </h3>
+            <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+              Adjust overlay opacity, toggle the <strong>Universal Safe Box</strong>, and click <strong>Export Check PNG</strong>. Drop the exported proof image onto a top reference track in <strong>CapCut</strong>, <strong>Premiere Pro</strong>, or <strong>DaVinci Resolve</strong> while aligning text.
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <!-- Section 2: 1080x1920 Vertical Video Safe-Zone Dimensions Reference Table -->
+      <div class="space-y-4">
+        <div class="max-w-2xl">
+          <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white" style="text-wrap: balance;">
+            1080×1920 Vertical Video Safe-Zone Dimensions Reference
+          </h2>
+          <p class="mt-1.5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            Standard UI obstruction margins for a full HD <span class="font-mono tabular-nums text-slate-800 dark:text-slate-200">1080 × 1920 px</span> (<span class="font-mono tabular-nums">9:16</span>) canvas across major short-form video feeds.
+          </p>
+        </div>
+
+        <div class="theme-surface rounded-xl border border-slate-200 dark:border-slate-800/90 bg-white dark:bg-obsidian-900 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-obsidian-950/70 text-slate-700 dark:text-slate-300">
+                  <th scope="col" class="py-3 px-4 font-semibold whitespace-nowrap">Platform</th>
+                  <th scope="col" class="py-3 px-4 font-semibold whitespace-nowrap">Top Margin</th>
+                  <th scope="col" class="py-3 px-4 font-semibold whitespace-nowrap">Bottom Margin</th>
+                  <th scope="col" class="py-3 px-4 font-semibold whitespace-nowrap">Left Margin</th>
+                  <th scope="col" class="py-3 px-4 font-semibold whitespace-nowrap">Right Action Zone</th>
+                  <th scope="col" class="py-3 px-4 font-semibold whitespace-nowrap text-right">Unobstructed Center</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 dark:divide-slate-800/80 text-slate-600 dark:text-slate-300">
+                <tr class="hover:bg-slate-50/70 dark:hover:bg-obsidian-850/60 transition-colors">
+                  <td class="py-3 px-4 font-semibold text-slate-900 dark:text-white whitespace-nowrap">TikTok</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">11% (211 px)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">20% (384 px)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">0% (0 px)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">15% (162 px · 42–82% H)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums text-right whitespace-nowrap font-medium text-slate-900 dark:text-slate-100">918 × 1325 px</td>
+                </tr>
+                <tr class="hover:bg-slate-50/70 dark:hover:bg-obsidian-850/60 transition-colors">
+                  <td class="py-3 px-4 font-semibold text-slate-900 dark:text-white whitespace-nowrap">Instagram Reels</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">10% (192 px)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">18% (346 px)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">0% (0 px)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">14% (151 px · 48–84% H)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums text-right whitespace-nowrap font-medium text-slate-900 dark:text-slate-100">929 × 1382 px</td>
+                </tr>
+                <tr class="hover:bg-slate-50/70 dark:hover:bg-obsidian-850/60 transition-colors">
+                  <td class="py-3 px-4 font-semibold text-slate-900 dark:text-white whitespace-nowrap">YouTube Shorts</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">9% (173 px)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">19% (365 px)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">0% (0 px)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">15% (162 px · 44–83% H)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums text-right whitespace-nowrap font-medium text-slate-900 dark:text-slate-100">918 × 1382 px</td>
+                </tr>
+                <tr class="bg-emerald-50/50 dark:bg-emerald-950/20 hover:bg-emerald-50/80 dark:hover:bg-emerald-950/30 transition-colors">
+                  <td class="py-3 px-4 font-semibold text-emerald-700 dark:text-emerald-400 whitespace-nowrap">Universal Cross-Platform Safe Area</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">11% (211 px)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">20% (384 px)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">2% (22 px)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums whitespace-nowrap">15% (162 px)</td>
+                  <td class="py-3 px-4 font-mono tabular-nums text-right whitespace-nowrap font-semibold text-emerald-700 dark:text-emerald-400">896 × 1325 px</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Frequently Asked Questions (Interactive Accordion) -->
+      <div class="space-y-4">
+        <div class="max-w-2xl">
+          <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white" style="text-wrap: balance;">
+            Frequently Asked Questions
+          </h2>
+          <p class="mt-1.5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            Common questions about vertical video safe zones, aspect ratios, and local browser privacy.
+          </p>
+        </div>
+
+        <div id="faqAccordion" class="theme-surface rounded-xl border border-slate-200 dark:border-slate-800/90 bg-white dark:bg-obsidian-900 divide-y divide-slate-200 dark:divide-slate-800/90">
+          <!-- FAQ 1 -->
+          <div class="faq-item">
+            <h3>
+              <button
+                type="button"
+                class="faq-trigger w-full flex items-center justify-between gap-4 px-5 py-4 text-left text-sm font-semibold text-slate-900 dark:text-white hover:bg-slate-50/70 dark:hover:bg-obsidian-850/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500"
+                aria-expanded="true"
+                aria-controls="faq-panel-1"
+              >
+                <span>What is a safe zone in TikTok, Instagram Reels, and YouTube Shorts?</span>
+                <svg class="faq-chevron w-4 h-4 shrink-0 text-slate-500 dark:text-slate-400 transition-transform duration-200 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+            </h3>
+            <div id="faq-panel-1" class="faq-panel px-5 pb-4 text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              A safe zone is the unobstructed central region of a 9:16 vertical video where captions, titles, faces, and call-to-action graphics remain completely visible without being covered by platform UI elements such as top navigation tabs, right-side engagement buttons, or bottom captions and audio tickers.
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item">
+            <h3>
+              <button
+                type="button"
+                class="faq-trigger w-full flex items-center justify-between gap-4 px-5 py-4 text-left text-sm font-semibold text-slate-900 dark:text-white hover:bg-slate-50/70 dark:hover:bg-obsidian-850/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500"
+                aria-expanded="false"
+                aria-controls="faq-panel-2"
+              >
+                <span>What are the exact safe-zone dimensions for a 1080×1920 vertical video?</span>
+                <svg class="faq-chevron w-4 h-4 shrink-0 text-slate-500 dark:text-slate-400 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+            </h3>
+            <div id="faq-panel-2" class="faq-panel hidden px-5 pb-4 text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              On a <span class="font-mono tabular-nums">1080 × 1920 px</span> frame, TikTok reserves 11% (<span class="font-mono tabular-nums">211 px</span>) top, 20% (<span class="font-mono tabular-nums">384 px</span>) bottom, and 15% (<span class="font-mono tabular-nums">162 px</span>) on the right action bar. Instagram Reels reserves 10% (<span class="font-mono tabular-nums">192 px</span>) top, 18% (<span class="font-mono tabular-nums">346 px</span>) bottom, and 14% (<span class="font-mono tabular-nums">151 px</span>) right. YouTube Shorts reserves 9% (<span class="font-mono tabular-nums">173 px</span>) top, 19% (<span class="font-mono tabular-nums">365 px</span>) bottom, and 15% (<span class="font-mono tabular-nums">162 px</span>) right.
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item">
+            <h3>
+              <button
+                type="button"
+                class="faq-trigger w-full flex items-center justify-between gap-4 px-5 py-4 text-left text-sm font-semibold text-slate-900 dark:text-white hover:bg-slate-50/70 dark:hover:bg-obsidian-850/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500"
+                aria-expanded="false"
+                aria-controls="faq-panel-3"
+              >
+                <span>How do I use the exported PNG safe-zone overlay in CapCut or Premiere Pro?</span>
+                <svg class="faq-chevron w-4 h-4 shrink-0 text-slate-500 dark:text-slate-400 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+            </h3>
+            <div id="faq-panel-3" class="faq-panel hidden px-5 pb-4 text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              Click <strong>Export Check PNG</strong> to save a <span class="font-mono tabular-nums">1080 × 1920 px</span> reference image. Place that PNG on the topmost track in CapCut, Adobe Premiere Pro, or DaVinci Resolve, adjust its opacity while positioning subtitles and stickers, and then hide or delete the guide track before rendering your final video.
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item">
+            <h3>
+              <button
+                type="button"
+                class="faq-trigger w-full flex items-center justify-between gap-4 px-5 py-4 text-left text-sm font-semibold text-slate-900 dark:text-white hover:bg-slate-50/70 dark:hover:bg-obsidian-850/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500"
+                aria-expanded="false"
+                aria-controls="faq-panel-4"
+              >
+                <span>Are my videos or images uploaded to a server when using this tool?</span>
+                <svg class="faq-chevron w-4 h-4 shrink-0 text-slate-500 dark:text-slate-400 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+            </h3>
+            <div id="faq-panel-4" class="faq-panel hidden px-5 pb-4 text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              No. All image and video previews run 100% client-side inside your web browser using HTML5 <span class="font-mono">FileReader</span>, <span class="font-mono">URL.createObjectURL</span>, and <span class="font-mono">&lt;canvas&gt;</span>. Your unpublished edits and media assets never touch a remote server.
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-item">
+            <h3>
+              <button
+                type="button"
+                class="faq-trigger w-full flex items-center justify-between gap-4 px-5 py-4 text-left text-sm font-semibold text-slate-900 dark:text-white hover:bg-slate-50/70 dark:hover:bg-obsidian-850/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500"
+                aria-expanded="false"
+                aria-controls="faq-panel-5"
+              >
+                <span>Why should I check the Universal Safe Box when cross-posting to all three platforms?</span>
+                <svg class="faq-chevron w-4 h-4 shrink-0 text-slate-500 dark:text-slate-400 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+            </h3>
+            <div id="faq-panel-5" class="faq-panel hidden px-5 pb-4 text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              TikTok, Instagram Reels, and YouTube Shorts each position their action icons, titles, and navigation bars at slightly different offsets. Turning on the <strong>Universal Safe Box</strong> outlines the strictest shared unobstructed center zone (<span class="font-mono tabular-nums">896 × 1325 px</span>) so a single master export looks clean across every platform.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- =====================================================================
+       MINIMAL FOOTER
+       ===================================================================== -->
+  <footer class="border-t border-slate-200 dark:border-slate-800/90 bg-white dark:bg-obsidian-950 mt-auto">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+      <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+        <span class="font-medium text-slate-700 dark:text-slate-300">&copy; 2026 mohit-tools.com</span>
+        <button type="button" data-legal-modal="privacy" class="hover:text-slate-900 dark:hover:text-white underline-offset-4 hover:underline transition-colors">
+          Privacy Policy
+        </button>
+        <button type="button" data-legal-modal="terms" class="hover:text-slate-900 dark:hover:text-white underline-offset-4 hover:underline transition-colors">
+          Terms
+        </button>
+        <a href="Contact.html" class="hover:text-slate-900 dark:hover:text-white underline-offset-4 hover:underline transition-colors">
+          Contact.html
+        </a>
+      </div>
+
+      <!-- Buy Me a Coffee Widget -->
+      <a
+        href="https://www.buymeacoffee.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-xs bg-[#FFDD00] hover:bg-[#f5d300] text-slate-950 shadow-sm transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+      >
+        <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+          <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" />
+          <line x1="6" y1="2" x2="6" y2="4" />
+          <line x1="10" y1="2" x2="10" y2="4" />
+          <line x1="14" y1="2" x2="14" y2="4" />
+        </svg>
+        <span>Buy Me a Coffee</span>
+      </a>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       DISMISSIBLE COOKIE CONSENT BANNER (Bottom-Left Corner)
+       ===================================================================== -->
+  <div
+    id="cookieBanner"
+    role="dialog"
+    aria-label="Cookie consent"
+    class="hidden fixed bottom-4 left-4 z-50 max-w-[340px] w-[calc(100%-2rem)] rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-obsidian-900 p-4 shadow-xl"
+  >
+    <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+      This site uses <span class="font-medium text-slate-900 dark:text-white">localStorage</span> for theme preferences and supports analytics/AdSense cookies. Your media files never leave your browser.
+    </p>
+    <div class="mt-3 flex items-center gap-2">
+      <button
+        id="cookieAcceptBtn"
+        type="button"
+        class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+      >
+        Accept
+      </button>
+      <button
+        id="cookieDismissBtn"
+        type="button"
+        class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 dark:bg-obsidian-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+      >
+        Dismiss
+      </button>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       LIGHTWEIGHT LEGAL MODAL (Privacy Policy / Terms)
+       ===================================================================== -->
+  <div
+    id="legalModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="legalModalTitle"
+    class="hidden fixed inset-0 z-50 items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm"
+  >
+    <div class="w-full max-w-md rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-obsidian-900 p-6 shadow-2xl">
+      <div class="flex items-center justify-between gap-4 mb-3">
+        <h2 id="legalModalTitle" class="text-base font-semibold text-slate-900 dark:text-white"></h2>
+        <button
+          id="legalModalCloseBtn"
+          type="button"
+          aria-label="Close modal"
+          class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-obsidian-800 transition-colors"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div id="legalModalBody" class="text-xs leading-relaxed text-slate-600 dark:text-slate-300 space-y-2.5"></div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       APPLICATION JAVASCRIPT (Pure ES6+ Vanilla JS, 100% Client-Side)
+       ===================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      if (typeof CanvasRenderingContext2D !== 'undefined' && !CanvasRenderingContext2D.prototype.roundRect) {
+        CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+          const radius = typeof r === 'number' ? r : (Array.isArray(r) ? r[0] : 0);
+          const cr = Math.min(radius, w / 2, h / 2);
+          this.beginPath();
+          this.moveTo(x + cr, y);
+          this.arcTo(x + w, y, x + w, y + h, cr);
+          this.arcTo(x + w, y + h, x, y + h, cr);
+          this.arcTo(x, y + h, x, y, cr);
+          this.arcTo(x, y, x + w, y, cr);
+          this.closePath();
+          return this;
+        };
+      }
+
+      /* -------------------------------------------------------------------
+         1. STATE & CONSTANTS
+         ------------------------------------------------------------------- */
+      const EXPORT_W = 1080;
+      const EXPORT_H = 1920;
+
+      const PLATFORMS = {
+        tiktok: {
+          name: 'TikTok',
+          topPct: 11,
+          rightPct: 15,
+          rightTopPct: 42,
+          rightBottomPct: 82,
+          bottomPct: 20,
+          specLabel: 'Top 11% · Right 15% (42–82%) · Bottom 20%',
+        },
+        reels: {
+          name: 'Instagram Reels',
+          topPct: 10,
+          rightPct: 14,
+          rightTopPct: 48,
+          rightBottomPct: 84,
+          bottomPct: 18,
+          specLabel: 'Top 10% · Right 14% (48–84%) · Bottom 18%',
+        },
+        shorts: {
+          name: 'YouTube Shorts',
+          topPct: 9,
+          rightPct: 15,
+          rightTopPct: 44,
+          rightBottomPct: 83,
+          bottomPct: 19,
+          specLabel: 'Top 9% · Right 15% (44–83%) · Bottom 19%',
+        },
+      };
+
+      const state = {
+        platform: 'tiktok',        // 'tiktok' | 'reels' | 'shorts'
+        viewMode: 'single',        // 'single' | 'comparison'
+        overlayStyle: 'red',       // 'red' | 'mockup' | 'hybrid'
+        opacity: 38,               // 15..90 (%)
+        universalSafe: false,      // boolean
+        mediaType: 'none',         // 'none' | 'image' | 'video' | 'sample'
+        imageSource: null,         // HTMLImageElement | HTMLCanvasElement
+        videoUrl: null,            // ObjectURL string
+        isPlaying: false,
+        rafId: null,
+        mediaWidth: 0,
+        mediaHeight: 0,
+      };
+
+      /* -------------------------------------------------------------------
+         2. DOM REFERENCES
+         ------------------------------------------------------------------- */
+      const htmlEl = document.documentElement;
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+      const dropzone = document.getElementById('dropzone');
+      const fileInput = document.getElementById('fileInput');
+      const mediaError = document.getElementById('mediaError');
+      const mediaMetaRow = document.getElementById('mediaMetaRow');
+      const mediaFilename = document.getElementById('mediaFilename');
+      const mediaDimensions = document.getElementById('mediaDimensions');
+      const loadSampleBtn = document.getElementById('loadSampleBtn');
+      const clearMediaBtn = document.getElementById('clearMediaBtn');
+
+      const masterVideo = document.getElementById('masterVideo');
+      const videoControlsPanel = document.getElementById('videoControlsPanel');
+      const videoPlayPauseBtn = document.getElementById('videoPlayPauseBtn');
+      const playIcon = document.getElementById('playIcon');
+      const pauseIcon = document.getElementById('pauseIcon');
+      const videoScrubber = document.getElementById('videoScrubber');
+      const videoTimeReadout = document.getElementById('videoTimeReadout');
+
+      const viewModeBtns = document.querySelectorAll('.view-mode-btn');
+      const overlayStyleBtns = document.querySelectorAll('.overlay-style-btn');
+      const platformTabBtns = document.querySelectorAll('.platform-tab-btn');
+      const opacitySlider = document.getElementById('opacitySlider');
+      const opacityReadout = document.getElementById('opacityReadout');
+      const universalSafeToggle = document.getElementById('universalSafeToggle');
+      const universalSafeKnob = document.getElementById('universalSafeKnob');
+      const exportPngBtn = document.getElementById('exportPngBtn');
+
+      const singlePlatformTabs = document.getElementById('singlePlatformTabs');
+      const comparisonHeaderLabel = document.getElementById('comparisonHeaderLabel');
+      const activeSpecSummary = document.getElementById('activeSpecSummary');
+      const singleViewContainer = document.getElementById('singleViewContainer');
+      const comparisonViewContainer = document.getElementById('comparisonViewContainer');
+      const emptyPromptSingle = document.getElementById('emptyPromptSingle');
+
+      const previewCanvasSingle = document.getElementById('previewCanvasSingle');
+      const previewCanvasTikTok = document.getElementById('previewCanvasTikTok');
+      const previewCanvasReels = document.getElementById('previewCanvasReels');
+      const previewCanvasShorts = document.getElementById('previewCanvasShorts');
+
+      const overlaySingle = document.getElementById('overlaySingle');
+      const overlayTikTok = document.getElementById('overlayTikTok');
+      const overlayReels = document.getElementById('overlayReels');
+      const overlayShorts = document.getElementById('overlayShorts');
+
+      const cookieBanner = document.getElementById('cookieBanner');
+      const cookieAcceptBtn = document.getElementById('cookieAcceptBtn');
+      const cookieDismissBtn = document.getElementById('cookieDismissBtn');
+
+      const legalModal = document.getElementById('legalModal');
+      const legalModalTitle = document.getElementById('legalModalTitle');
+      const legalModalBody = document.getElementById('legalModalBody');
+      const legalModalCloseBtn = document.getElementById('legalModalCloseBtn');
+
+      /* -------------------------------------------------------------------
+         3. THEME TOGGLE & PERSISTENCE
+         ------------------------------------------------------------------- */
+      themeToggleBtn.addEventListener('click', () => {
+        const isDark = htmlEl.classList.toggle('dark');
+        try {
+          localStorage.setItem('safezone_theme', isDark ? 'dark' : 'light');
+        } catch (e) { /* ignore storage errors */ }
+      });
+
+      /* -------------------------------------------------------------------
+         4. COOKIE CONSENT & LEGAL MODALS
+         ------------------------------------------------------------------- */
+      (function initCookieBanner() {
+        try {
+          const consent = localStorage.getItem('safezone_cookie_consent');
+          if (!consent) {
+            cookieBanner.classList.remove('hidden');
+          }
+        } catch (e) {
+          cookieBanner.classList.remove('hidden');
+        }
+      })();
+
+      function dismissCookieBanner(val) {
+        cookieBanner.classList.add('hidden');
+        try {
+          localStorage.setItem('safezone_cookie_consent', val);
+        } catch (e) { /* ignore */ }
+      }
+      cookieAcceptBtn.addEventListener('click', () => dismissCookieBanner('accepted'));
+      cookieDismissBtn.addEventListener('click', () => dismissCookieBanner('dismissed'));
+
+      const LEGAL_CONTENT = {
+        privacy: {
+          title: 'Privacy Policy',
+          html: '<p><strong>100% Client-Side Processing:</strong> SafeZone Checker processes all images and videos strictly inside your local browser using HTML5 FileReader, Object URLs, and Canvas APIs. No media files are ever uploaded to a server.</p><p><strong>Local Storage &amp; Ads:</strong> Theme preferences and cookie consent choices are stored locally in your browser. Third-party analytics (GA4) or Google AdSense scripts, when enabled in deployment, may use standard cookies subject to Google privacy terms.</p>',
+        },
+        terms: {
+          title: 'Terms of Use',
+          html: '<p>SafeZone Checker (mohit-tools.com) is provided as a free visual reference utility for short-form video creators. Platform UI dimensions vary slightly across phone aspect ratios, OS versions, and A/B tests on TikTok, Instagram Reels, and YouTube Shorts.</p><p>Always keep critical subtitles and CTAs well inside the Universal Safe Box for maximum cross-device compatibility.</p>',
+        },
+      };
+
+      document.querySelectorAll('[data-legal-modal]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const key = btn.getAttribute('data-legal-modal');
+          const data = LEGAL_CONTENT[key];
+          if (!data) return;
+          legalModalTitle.textContent = data.title;
+          legalModalBody.innerHTML = data.html;
+          legalModal.classList.remove('hidden');
+          legalModal.classList.add('flex');
+        });
+      });
+
+      function closeLegalModal() {
+        legalModal.classList.add('hidden');
+        legalModal.classList.remove('flex');
+      }
+      legalModalCloseBtn.addEventListener('click', closeLegalModal);
+      legalModal.addEventListener('click', (e) => {
+        if (e.target === legalModal) closeLegalModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !legalModal.classList.contains('hidden')) {
+          closeLegalModal();
+        }
+      });
+
+      /* -------------------------------------------------------------------
+         5. MEDIA LOADING (IMAGES, VIDEOS, SAMPLE CANVAS)
+         ------------------------------------------------------------------- */
+      function showMediaError(msg) {
+        mediaError.textContent = msg;
+        mediaError.classList.remove('hidden');
+      }
+      function clearMediaError() {
+        mediaError.textContent = '';
+        mediaError.classList.add('hidden');
+      }
+
+      function formatTime(seconds) {
+        if (!Number.isFinite(seconds) || seconds < 0) return '00:00.0';
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        const tenths = Math.floor((seconds % 1) * 10);
+        return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0') + '.' + tenths;
+      }
+
+      function stopVideoLoop() {
+        if (state.rafId) {
+          cancelAnimationFrame(state.rafId);
+          state.rafId = null;
+        }
+      }
+
+      function clearCurrentMedia() {
+        stopVideoLoop();
+        if (!masterVideo.paused) {
+          masterVideo.pause();
+        }
+        masterVideo.removeAttribute('src');
+        masterVideo.load();
+
+        if (state.videoUrl) {
+          URL.revokeObjectURL(state.videoUrl);
+          state.videoUrl = null;
+        }
+
+        state.mediaType = 'none';
+        state.imageSource = null;
+        state.isPlaying = false;
+        state.mediaWidth = 0;
+        state.mediaHeight = 0;
+        fileInput.value = '';
+
+        clearMediaError();
+        mediaMetaRow.classList.add('hidden');
+        mediaMetaRow.classList.remove('flex');
+        videoControlsPanel.classList.add('hidden');
+        videoControlsPanel.classList.remove('flex');
+        emptyPromptSingle.classList.remove('hidden');
+        clearMediaBtn.disabled = true;
+
+        updatePlayPauseUI();
+        renderMediaToCanvases();
+      }
+
+      function handleFileSelection(file) {
+        if (!file) return;
+        clearMediaError();
+
+        const ext = (file.name.split('.').pop() || '').toLowerCase();
+        const isImage = file.type.startsWith('image/') || ['jpg', 'jpeg', 'png', 'webp'].includes(ext);
+        const isVideo = file.type.startsWith('video/') || ['mp4', 'webm', 'mov'].includes(ext);
+
+        if (!isImage && !isVideo) {
+          showMediaError('Unsupported format. Please choose JPG, PNG, WEBP, MP4, WEBM, or MOV.');
+          return;
+        }
+
+        // Clean previous media without resetting file input if needed
+        stopVideoLoop();
+        if (!masterVideo.paused) masterVideo.pause();
+        if (state.videoUrl) {
+          URL.revokeObjectURL(state.videoUrl);
+          state.videoUrl = null;
+        }
+
+        if (isImage) {
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            const img = new Image();
+            img.onload = () => {
+              state.mediaType = 'image';
+              state.imageSource = img;
+              state.mediaWidth = img.naturalWidth;
+              state.mediaHeight = img.naturalHeight;
+              state.isPlaying = false;
+
+              videoControlsPanel.classList.add('hidden');
+              videoControlsPanel.classList.remove('flex');
+              emptyPromptSingle.classList.add('hidden');
+              clearMediaBtn.disabled = false;
+
+              mediaFilename.textContent = file.name;
+              mediaDimensions.textContent = img.naturalWidth + '×' + img.naturalHeight;
+              mediaMetaRow.classList.remove('hidden');
+              mediaMetaRow.classList.add('flex');
+
+              renderMediaToCanvases();
+            };
+            img.onerror = () => {
+              showMediaError('Could not decode image file. Try another JPG, PNG, or WEBP.');
+            };
+            img.src = ev.target.result;
+          };
+          reader.onerror = () => {
+            showMediaError('Failed to read image file locally.');
+          };
+          reader.readAsDataURL(file);
+        } else if (isVideo) {
+          const url = URL.createObjectURL(file);
+          state.videoUrl = url;
+          state.mediaType = 'video';
+          state.imageSource = null;
+          state.isPlaying = false;
+
+          masterVideo.src = url;
+          masterVideo.onloadedmetadata = () => {
+            const dur = masterVideo.duration || 0;
+            videoScrubber.min = '0';
+            videoScrubber.max = String(dur > 0 ? dur : 1);
+            videoScrubber.value = '0';
+            state.mediaWidth = masterVideo.videoWidth;
+            state.mediaHeight = masterVideo.videoHeight;
+
+            mediaFilename.textContent = file.name;
+            mediaDimensions.textContent = masterVideo.videoWidth + '×' + masterVideo.videoHeight;
+            mediaMetaRow.classList.remove('hidden');
+            mediaMetaRow.classList.add('flex');
+
+            videoControlsPanel.classList.remove('hidden');
+            videoControlsPanel.classList.add('flex');
+            videoTimeReadout.textContent = formatTime(0) + ' / ' + formatTime(dur);
+            emptyPromptSingle.classList.add('hidden');
+            clearMediaBtn.disabled = false;
+            updatePlayPauseUI();
+
+            // Seek slightly to ensure first frame renders on Safari/Chrome
+            if (masterVideo.currentTime === 0) {
+              masterVideo.currentTime = 0.001;
+            }
+          };
+
+          masterVideo.onloadeddata = () => {
+            renderMediaToCanvases();
+          };
+
+          masterVideo.onseeked = () => {
+            renderMediaToCanvases();
+            videoTimeReadout.textContent = formatTime(masterVideo.currentTime) + ' / ' + formatTime(masterVideo.duration || 0);
+          };
+
+          masterVideo.onerror = () => {
+            showMediaError('Browser cannot decode this video codec. Try MP4 (H.264) or WEBM.');
+            clearCurrentMedia();
+          };
+        }
+      }
+
+      /* Dropzone drag/drop & file input events */
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          handleFileSelection(e.target.files[0]);
+        }
+      });
+
+      ['dragenter', 'dragover'].forEach((evt) => {
+        dropzone.addEventListener(evt, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.classList.add('dropzone-active');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach((evt) => {
+        dropzone.addEventListener(evt, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.classList.remove('dropzone-active');
+        });
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        if (dt && dt.files && dt.files[0]) {
+          handleFileSelection(dt.files[0]);
+        }
+      });
+
+      dropzone.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          fileInput.click();
+        }
+      });
+
+      clearMediaBtn.addEventListener('click', clearCurrentMedia);
+
+      /* -------------------------------------------------------------------
+         6. VIDEO TRANSPORT & FRAME SYNC LOOP
+         ------------------------------------------------------------------- */
+      function updatePlayPauseUI() {
+        if (state.isPlaying) {
+          playIcon.classList.add('hidden');
+          pauseIcon.classList.remove('hidden');
+        } else {
+          playIcon.classList.remove('hidden');
+          pauseIcon.classList.add('hidden');
+        }
+      }
+
+      function videoFrameTick() {
+        if (!state.isPlaying || state.mediaType !== 'video') return;
+        renderMediaToCanvases();
+        const cur = masterVideo.currentTime || 0;
+        const dur = masterVideo.duration || 0;
+        videoScrubber.value = String(cur);
+        videoTimeReadout.textContent = formatTime(cur) + ' / ' + formatTime(dur);
+        state.rafId = requestAnimationFrame(videoFrameTick);
+      }
+
+      videoPlayPauseBtn.addEventListener('click', () => {
+        if (state.mediaType !== 'video') return;
+        if (masterVideo.paused) {
+          masterVideo.play().then(() => {
+            state.isPlaying = true;
+            updatePlayPauseUI();
+            videoFrameTick();
+          }).catch(() => {
+            // Fallback muted play if browser blocks audio
+            masterVideo.muted = true;
+            masterVideo.play().then(() => {
+              state.isPlaying = true;
+              updatePlayPauseUI();
+              videoFrameTick();
+            });
+          });
+        } else {
+          masterVideo.pause();
+          state.isPlaying = false;
+          stopVideoLoop();
+          updatePlayPauseUI();
+          renderMediaToCanvases();
+        }
+      });
+
+      videoScrubber.addEventListener('input', () => {
+        if (state.mediaType !== 'video') return;
+        const target = parseFloat(videoScrubber.value);
+        if (!Number.isNaN(target)) {
+          masterVideo.currentTime = target;
+          videoTimeReadout.textContent = formatTime(target) + ' / ' + formatTime(masterVideo.duration || 0);
+        }
+      });
+
+      /* -------------------------------------------------------------------
+         7. INSTANT DEMO MODE: REALISTIC 9:16 SAMPLE FRAME GENERATOR
+         ------------------------------------------------------------------- */
+      function generateSampleFrameCanvas() {
+        const c = document.createElement('canvas');
+        c.width = EXPORT_W;
+        c.height = EXPORT_H;
+        const ctx = c.getContext('2d');
+
+        // 1. Studio backdrop gradient
+        const bgGrad = ctx.createLinearGradient(0, 0, EXPORT_W, EXPORT_H);
+        bgGrad.addColorStop(0, '#141b29');
+        bgGrad.addColorStop(0.5, '#192234');
+        bgGrad.addColorStop(1, '#0b0f17');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, EXPORT_W, EXPORT_H);
+
+        // 2. Warm practical key glow & cool rim light
+        const warmGlow = ctx.createRadialGradient(220, 620, 20, 220, 620, 650);
+        warmGlow.addColorStop(0, 'rgba(245, 158, 11, 0.24)');
+        warmGlow.addColorStop(1, 'rgba(245, 158, 11, 0)');
+        ctx.fillStyle = warmGlow;
+        ctx.fillRect(0, 0, EXPORT_W, EXPORT_H);
+
+        const coolGlow = ctx.createRadialGradient(890, 520, 20, 890, 520, 580);
+        coolGlow.addColorStop(0, 'rgba(56, 189, 248, 0.20)');
+        coolGlow.addColorStop(1, 'rgba(56, 189, 248, 0)');
+        ctx.fillStyle = coolGlow;
+        ctx.fillRect(0, 0, EXPORT_W, EXPORT_H);
+
+        // 3. Acoustic slat panel lines (subtle studio texture)
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.025)';
+        for (let x = 80; x < 420; x += 36) {
+          ctx.fillRect(x, 120, 14, 1400);
+        }
+
+        // 4. Soft background shelf & practical lamp bokeh
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+        ctx.fillRect(720, 520, 320, 14);
+        ctx.beginPath();
+        ctx.arc(860, 460, 42, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(251, 191, 36, 0.25)';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(860, 460, 18, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(254, 243, 199, 0.55)';
+        ctx.fill();
+
+        // 5. Talking-head creator silhouette (rule-of-thirds framing)
+        // Shoulders / torso
+        const torsoGrad = ctx.createLinearGradient(540, 860, 540, 1650);
+        torsoGrad.addColorStop(0, '#2c3952');
+        torsoGrad.addColorStop(1, '#141a26');
+        ctx.fillStyle = torsoGrad;
+        ctx.beginPath();
+        ctx.moveTo(150, 1660);
+        ctx.quadraticCurveTo(185, 1020, 395, 935);
+        ctx.lineTo(685, 935);
+        ctx.quadraticCurveTo(895, 1020, 930, 1660);
+        ctx.closePath();
+        ctx.fill();
+
+        // Crewneck collar highlight
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.28)';
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.arc(540, 935, 125, 0.12 * Math.PI, 0.88 * Math.PI);
+        ctx.stroke();
+
+        // Neck
+        ctx.fillStyle = '#d19b7a';
+        ctx.fillRect(482, 810, 116, 155);
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.18)';
+        ctx.beginPath();
+        ctx.ellipse(540, 835, 62, 34, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Head
+        const faceGrad = ctx.createLinearGradient(390, 480, 690, 820);
+        faceGrad.addColorStop(0, '#e5b293');
+        faceGrad.addColorStop(1, '#c88c6b');
+        ctx.fillStyle = faceGrad;
+        ctx.beginPath();
+        ctx.ellipse(540, 650, 146, 188, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Hair silhouette
+        ctx.fillStyle = '#181b24';
+        ctx.beginPath();
+        ctx.ellipse(540, 520, 156, 112, 0, Math.PI, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(430, 560, 56, 0, Math.PI * 2);
+        ctx.arc(650, 560, 56, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Subtle glasses / eye-line indicator
+        ctx.strokeStyle = 'rgba(15, 23, 42, 0.72)';
+        ctx.lineWidth = 8;
+        ctx.beginPath();
+        ctx.roundRect(435, 610, 88, 56, 14);
+        ctx.roundRect(557, 610, 88, 56, 14);
+        ctx.moveTo(523, 634);
+        ctx.lineTo(557, 634);
+        ctx.stroke();
+
+        // Studio podcast mic arm entering from bottom-left
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 22;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(60, 1420);
+        ctx.lineTo(290, 1180);
+        ctx.stroke();
+        ctx.fillStyle = '#1e293b';
+        ctx.beginPath();
+        ctx.roundRect(265, 1080, 96, 145, 44);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.3)';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        // 6. Top Hook Title Card (sits right around 12.5% from top — safe!)
+        ctx.save();
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+        ctx.beginPath();
+        ctx.roundRect(210, 235, 660, 92, 18);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '700 42px "Plus Jakarta Sans", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('3 EDITING MISTAKES TO AVOID', 540, 282);
+        ctx.restore();
+
+        // 7. Lower-Third Creator Subtitles (demonstrating safe vs bottom danger overlap)
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = '800 62px "Plus Jakarta Sans", sans-serif';
+
+        const lines = [
+          { text: 'ALWAYS CHECK YOUR', y: 1380, color: '#ffffff', bg: '#2563eb' },
+          { text: 'SAFE ZONES BEFORE', y: 1468, color: '#0f172a', bg: '#facc15' },
+          { text: 'EXPORTING YOUR REEL!', y: 1556, color: '#ffffff', bg: '#0f172a' },
+        ];
+
+        lines.forEach((line) => {
+          const metrics = ctx.measureText(line.text);
+          const padX = 30;
+          const boxW = metrics.width + padX * 2;
+          const boxH = 74;
+          ctx.fillStyle = line.bg;
+          ctx.beginPath();
+          ctx.roundRect(540 - boxW / 2, line.y - boxH / 2, boxW, boxH, 14);
+          ctx.fill();
+
+          ctx.fillStyle = line.color;
+          ctx.fillText(line.text, 540, line.y + 2);
+        });
+        ctx.restore();
+
+        return c;
+      }
+
+      loadSampleBtn.addEventListener('click', () => {
+        clearMediaError();
+        stopVideoLoop();
+        if (!masterVideo.paused) masterVideo.pause();
+        if (state.videoUrl) {
+          URL.revokeObjectURL(state.videoUrl);
+          state.videoUrl = null;
+        }
+
+        const sampleCanvas = generateSampleFrameCanvas();
+        state.mediaType = 'sample';
+        state.imageSource = sampleCanvas;
+        state.mediaWidth = EXPORT_W;
+        state.mediaHeight = EXPORT_H;
+        state.isPlaying = false;
+
+        videoControlsPanel.classList.add('hidden');
+        videoControlsPanel.classList.remove('flex');
+        emptyPromptSingle.classList.add('hidden');
+        clearMediaBtn.disabled = false;
+
+        mediaFilename.textContent = 'sample-creator-frame.png';
+        mediaDimensions.textContent = '1080×1920';
+        mediaMetaRow.classList.remove('hidden');
+        mediaMetaRow.classList.add('flex');
+
+        renderMediaToCanvases();
+      });
+
+      /* -------------------------------------------------------------------
+         8. CANVAS DRAWING HELPERS (Preview & Offscreen PNG Export)
+         ------------------------------------------------------------------- */
+      function drawSourceContained(ctx, targetW, targetH) {
+        ctx.clearRect(0, 0, targetW, targetH);
+
+        let src = null;
+        let srcW = 0;
+        let srcH = 0;
+
+        if (state.mediaType === 'image' || state.mediaType === 'sample') {
+          src = state.imageSource;
+          srcW = state.mediaWidth;
+          srcH = state.mediaHeight;
+        } else if (state.mediaType === 'video' && masterVideo.readyState >= 2) {
+          src = masterVideo;
+          srcW = masterVideo.videoWidth;
+          srcH = masterVideo.videoHeight;
+        }
+
+        if (!src || !srcW || !srcH) return false;
+
+        ctx.fillStyle = '#090c12';
+        ctx.fillRect(0, 0, targetW, targetH);
+
+        const targetRatio = targetW / targetH;
+        const srcRatio = srcW / srcH;
+
+        let drawW = targetW;
+        let drawH = targetH;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        if (srcRatio > targetRatio) {
+          drawW = targetW;
+          drawH = targetW / srcRatio;
+          offsetY = (targetH - drawH) / 2;
+        } else {
+          drawH = targetH;
+          drawW = targetH * srcRatio;
+          offsetX = (targetW - drawW) / 2;
+        }
+
+        ctx.drawImage(src, offsetX, offsetY, drawW, drawH);
+        return true;
+      }
+
+      function renderMediaToCanvases() {
+        const canvases =
+          state.viewMode === 'single'
+            ? [previewCanvasSingle]
+            : [previewCanvasTikTok, previewCanvasReels, previewCanvasShorts];
+
+        canvases.forEach((c) => {
+          const ctx = c.getContext('2d');
+          drawSourceContained(ctx, c.width, c.height);
+        });
+      }
+
+      /* -------------------------------------------------------------------
+         9. HTML/SVG OVERLAY TEMPLATES FOR LIVE STAGE
+         ------------------------------------------------------------------- */
+      function buildDangerMaskHTML(platformKey, opacityAlpha, showLabels) {
+        const p = PLATFORMS[platformKey];
+        const fill = 'rgba(239, 68, 68, ' + opacityAlpha.toFixed(2) + ')';
+        const border = 'rgba(248, 113, 113, 0.92)';
+        const rightHeight = p.rightBottomPct - p.rightTopPct;
+
+        const topBadge = showLabels
+          ? '<span class="text-[10px] font-semibold tracking-tight text-white bg-red-950/75 px-1.5 py-0.5 rounded">Top UI (' + p.topPct + '%)</span>'
+          : '';
+        const rightBadge = showLabels
+          ? '<span class="text-[9px] font-semibold text-white bg-red-950/75 px-1 py-0.5 rounded -rotate-90 whitespace-nowrap">Engagement Icons</span>'
+          : '';
+        const bottomBadge = showLabels
+          ? '<span class="text-[10px] font-semibold tracking-tight text-white bg-red-950/75 px-1.5 py-0.5 rounded">' +
+              (platformKey === 'shorts' ? 'Channel, Title &amp; Scrubber (' + p.bottomPct + '%)' : 'Caption &amp; Audio Zone (' + p.bottomPct + '%)') +
+            '</span>'
+          : '';
+
+        return (
+          '<div style="position:absolute;top:0;left:0;right:0;height:' + p.topPct + '%;background:' + fill + ';border-bottom:1.5px dashed ' + border + ';" class="flex items-center justify-center px-2">' +
+            topBadge +
+          '</div>' +
+          '<div style="position:absolute;top:' + p.rightTopPct + '%;height:' + rightHeight + '%;right:0;width:' + p.rightPct + '%;background:' + fill + ';border-left:1.5px dashed ' + border + ';border-top:1.5px dashed ' + border + ';border-bottom:1.5px dashed ' + border + ';" class="flex items-center justify-center">' +
+            rightBadge +
+          '</div>' +
+          '<div style="position:absolute;bottom:0;left:0;right:0;height:' + p.bottomPct + '%;background:' + fill + ';border-top:1.5px dashed ' + border + ';" class="flex items-center justify-center px-2">' +
+            bottomBadge +
+          '</div>'
+        );
+      }
+
+      function buildMockupHTML(platformKey, opacityAlpha, isHybrid) {
+        const uiAlpha = isHybrid ? Math.min(1, opacityAlpha + 0.35) : Math.min(1, opacityAlpha + 0.45);
+        const scrimClass = isHybrid ? '' : 'bg-gradient-to-b from-black/45 via-transparent to-black/75';
+
+        if (platformKey === 'tiktok') {
+          return (
+            '<div style="opacity:' + uiAlpha.toFixed(2) + '" class="absolute inset-0 text-white ' + scrimClass + '">' +
+              /* Top 11% */
+              '<div style="height:11%" class="px-3.5 pt-2 flex flex-col justify-between">' +
+                '<div class="flex items-center justify-between text-[10px] font-semibold opacity-90">' +
+                  '<span>9:41</span>' +
+                  '<div class="flex items-center gap-1">' +
+                    '<svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M2 20h2V10H2v10zm4 0h2V7H6v13zm4 0h2V4h-2v16zm4 0h2v-6h-2v6z"/></svg>' +
+                    '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="7" width="18" height="10" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><rect x="4" y="9" width="12" height="6" rx="1"/></svg>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="flex items-center justify-between pb-1">' +
+                  '<span class="w-4"></span>' +
+                  '<div class="flex items-center gap-3 text-[11px] font-semibold">' +
+                    '<span class="opacity-70">Following</span>' +
+                    '<span class="border-b-2 border-white pb-0.5">For You</span>' +
+                  '</div>' +
+                  '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>' +
+                '</div>' +
+              '</div>' +
+              /* Right Action Bar (42% - 82%, Right 15%) */
+              '<div style="top:42%;height:40%;right:0;width:15%" class="absolute flex flex-col items-center justify-between py-1.5">' +
+                '<div class="relative flex flex-col items-center">' +
+                  '<div class="w-7 h-7 rounded-full border border-white bg-slate-700 flex items-center justify-center text-[9px] font-bold">M</div>' +
+                  '<div class="-mt-1.5 w-3.5 h-3.5 rounded-full bg-rose-500 flex items-center justify-center text-[9px] font-bold">+</div>' +
+                '</div>' +
+                '<div class="flex flex-col items-center gap-0.5"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="text-[9px] font-semibold">48.2K</span></div>' +
+                '<div class="flex flex-col items-center gap-0.5"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span class="text-[9px] font-semibold">612</span></div>' +
+                '<div class="flex flex-col items-center gap-0.5"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span class="text-[9px] font-semibold">4.1K</span></div>' +
+                '<div class="flex flex-col items-center gap-0.5"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg><span class="text-[9px] font-semibold">1.9K</span></div>' +
+                '<div class="w-6 h-6 rounded-full border-2 border-slate-600 bg-slate-900 flex items-center justify-center animate-spin-disc"><div class="w-2 h-2 rounded-full bg-white"></div></div>' +
+              '</div>' +
+              /* Bottom 20% */
+              '<div style="height:20%;bottom:0;left:0;right:0" class="absolute flex flex-col justify-end">' +
+                '<div class="px-3 pb-2 pr-[17%] space-y-1">' +
+                  '<div class="text-[11px] font-bold">@creator.studio</div>' +
+                  '<div class="text-[10px] leading-tight opacity-90 line-clamp-2">Always test vertical safe zones before publishing your short-form edit #editing #creator</div>' +
+                  '<div class="flex items-center gap-1.5 text-[10px] opacity-90"><svg class="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span class="truncate">Original Sound - creator.studio</span></div>' +
+                '</div>' +
+                '<div class="h-7 border-t border-white/20 bg-black/75 px-4 flex items-center justify-between text-[9px] opacity-90">' +
+                  '<span class="font-semibold">Home</span><span>Friends</span><span class="px-2 py-0.5 rounded bg-white text-black font-bold">+</span><span>Inbox</span><span>Profile</span>' +
+                '</div>' +
+              '</div>' +
+            '</div>'
+          );
+        }
+
+        if (platformKey === 'reels') {
+          return (
+            '<div style="opacity:' + uiAlpha.toFixed(2) + '" class="absolute inset-0 text-white ' + scrimClass + '">' +
+              /* Top 10% */
+              '<div style="height:10%" class="px-3.5 pt-3 flex items-center justify-between">' +
+                '<span class="text-sm font-bold tracking-tight">Reels</span>' +
+                '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>' +
+              '</div>' +
+              /* Right Action Bar (48% - 84%, Right 14%) */
+              '<div style="top:48%;height:36%;right:0;width:14%" class="absolute flex flex-col items-center justify-between py-1">' +
+                '<div class="flex flex-col items-center gap-0.5"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="text-[9px] font-semibold">18.4K</span></div>' +
+                '<div class="flex flex-col items-center gap-0.5"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="text-[9px] font-semibold">342</span></div>' +
+                '<div class="flex flex-col items-center gap-0.5"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg><span class="text-[9px] font-semibold">910</span></div>' +
+                '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>' +
+                '<div class="w-6 h-6 rounded border-2 border-white bg-slate-700"></div>' +
+              '</div>' +
+              /* Bottom 18% */
+              '<div style="height:18%;bottom:0;left:0;right:0" class="absolute flex flex-col justify-end">' +
+                '<div class="px-3 pb-2 pr-[16%] space-y-1">' +
+                  '<div class="flex items-center gap-2">' +
+                    '<div class="w-6 h-6 rounded-full bg-gradient-to-tr from-amber-500 to-pink-600 p-0.5"><div class="w-full h-full rounded-full bg-slate-800"></div></div>' +
+                    '<span class="text-[11px] font-semibold">creator.studio</span>' +
+                    '<span class="text-[9px] font-semibold px-2 py-0.5 rounded border border-white/70">Follow</span>' +
+                  '</div>' +
+                  '<div class="text-[10px] opacity-90 truncate">Check framing &amp; lower-third captions before upload...</div>' +
+                  '<div class="inline-flex items-center gap-1 text-[9px] bg-black/40 px-2 py-0.5 rounded-full border border-white/15"><span>♪ Original audio</span></div>' +
+                '</div>' +
+                '<div class="h-7 border-t border-white/15 bg-black/80 px-4 flex items-center justify-between text-[9px] opacity-90">' +
+                  '<span>Home</span><span>Search</span><span class="font-bold">Reels</span><span>Shop</span><span>Profile</span>' +
+                '</div>' +
+              '</div>' +
+            '</div>'
+          );
+        }
+
+        /* YouTube Shorts */
+        return (
+          '<div style="opacity:' + uiAlpha.toFixed(2) + '" class="absolute inset-0 text-white ' + scrimClass + '">' +
+            /* Top 9% */
+            '<div style="height:9%" class="px-3.5 pt-2.5 flex items-center justify-between">' +
+              '<span class="text-xs font-bold tracking-tight">Shorts</span>' +
+              '<div class="flex items-center gap-3">' +
+                '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>' +
+                '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>' +
+              '</div>' +
+            '</div>' +
+            /* Right Action Bar (44% - 83%, Right 15%) */
+            '<div style="top:44%;height:39%;right:0;width:15%" class="absolute flex flex-col items-center justify-between py-1">' +
+              '<div class="flex flex-col items-center gap-0.5"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg><span class="text-[9px] font-semibold">32K</span></div>' +
+              '<div class="flex flex-col items-center gap-0.5"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg><span class="text-[9px] font-semibold">Dislike</span></div>' +
+              '<div class="flex flex-col items-center gap-0.5"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="text-[9px] font-semibold">418</span></div>' +
+              '<div class="flex flex-col items-center gap-0.5"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg><span class="text-[9px] font-semibold">Share</span></div>' +
+              '<div class="flex flex-col items-center gap-0.5"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg><span class="text-[9px] font-semibold">Remix</span></div>' +
+              '<div class="w-6 h-6 rounded bg-slate-700 border border-white/80"></div>' +
+            '</div>' +
+            /* Bottom 19% */
+            '<div style="height:19%;bottom:0;left:0;right:0" class="absolute flex flex-col justify-end">' +
+              '<div class="px-3 pb-1.5 pr-[17%] space-y-1">' +
+                '<div class="flex items-center gap-2">' +
+                  '<div class="w-6 h-6 rounded-full bg-slate-700 border border-white/50"></div>' +
+                  '<span class="text-[11px] font-semibold">@CreatorStudio</span>' +
+                  '<span class="text-[9px] font-semibold bg-white text-black px-2 py-0.5 rounded-full">Subscribe</span>' +
+                '</div>' +
+                '<div class="text-[10px] font-medium leading-tight line-clamp-2">How to frame vertical Shorts without cropping subtitles</div>' +
+                '<div class="text-[9px] opacity-85 truncate">♪ Studio Beat (Original Audio)</div>' +
+              '</div>' +
+              /* Red progress scrubber */
+              '<div class="w-full h-[2px] bg-white/25"><div class="w-[58%] h-full bg-red-600"></div></div>' +
+              '<div class="h-7 bg-black/85 px-3 flex items-center justify-between text-[9px] opacity-90">' +
+                '<span>Home</span><span class="font-bold">Shorts</span><span class="px-2 py-0.5 rounded-full border border-white/40">+</span><span>Subs</span><span>You</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>'
+        );
+      }
+
+      function buildUniversalSafeBoxHTML() {
+        return (
+          '<div style="position:absolute;top:11%;bottom:20%;left:2%;right:15%;border:2px dashed #10b981;background:rgba(16,185,129,0.08);" class="rounded-lg flex items-start justify-start p-2">' +
+            '<span class="text-[10px] font-semibold text-emerald-300 bg-emerald-950/85 border border-emerald-500/40 px-1.5 py-0.5 rounded">Universal Safe Zone</span>' +
+          '</div>'
+        );
+      }
+
+      function renderOverlayInto(containerEl, platformKey) {
+        const opacityAlpha = state.opacity / 100;
+        let html = '';
+
+        if (state.overlayStyle === 'red') {
+          html += buildDangerMaskHTML(platformKey, opacityAlpha, true);
+        } else if (state.overlayStyle === 'mockup') {
+          html += buildMockupHTML(platformKey, opacityAlpha, false);
+        } else {
+          // Hybrid: red masks WITHOUT floating text labels + UI icon outlines combined
+          html += buildDangerMaskHTML(platformKey, opacityAlpha, false);
+          html += buildMockupHTML(platformKey, opacityAlpha, true);
+        }
+
+        if (state.universalSafe) {
+          html += buildUniversalSafeBoxHTML();
+        }
+
+        containerEl.innerHTML = html;
+      }
+
+      function updateOverlaysAndStageUI() {
+        // View Mode button states
+        viewModeBtns.forEach((btn) => {
+          const active = btn.getAttribute('data-view-mode') === state.viewMode;
+          btn.className = active
+            ? 'view-mode-btn px-3 py-2 rounded-md text-xs font-semibold bg-white dark:bg-obsidian-800 text-slate-900 dark:text-white shadow-sm transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500'
+            : 'view-mode-btn px-3 py-2 rounded-md text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500';
+        });
+
+        // Overlay Style button states
+        overlayStyleBtns.forEach((btn) => {
+          const active = btn.getAttribute('data-overlay-style') === state.overlayStyle;
+          btn.className = active
+            ? 'overlay-style-btn flex items-center justify-between px-3 py-2.5 rounded-lg border border-blue-600 dark:border-blue-500 bg-blue-50 dark:bg-blue-500/15 text-blue-700 dark:text-blue-300 text-left text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500'
+            : 'overlay-style-btn flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-obsidian-950/50 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700 text-left text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500';
+        });
+
+        // Platform Tab button states
+        platformTabBtns.forEach((btn) => {
+          const active = btn.getAttribute('data-platform') === state.platform;
+          btn.className = active
+            ? 'platform-tab-btn px-3.5 py-1.5 rounded-md text-xs font-semibold bg-white dark:bg-obsidian-800 text-slate-900 dark:text-white shadow-sm transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500'
+            : 'platform-tab-btn px-3.5 py-1.5 rounded-md text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500';
+        });
+
+        // Single vs Side-by-Side stage visibility
+        if (state.viewMode === 'single') {
+          singleViewContainer.classList.remove('hidden');
+          singleViewContainer.classList.add('flex');
+          comparisonViewContainer.classList.add('hidden');
+          comparisonViewContainer.classList.remove('grid');
+
+          singlePlatformTabs.classList.remove('hidden');
+          singlePlatformTabs.classList.add('flex');
+          comparisonHeaderLabel.classList.add('hidden');
+          comparisonHeaderLabel.classList.remove('flex');
+          activeSpecSummary.textContent = PLATFORMS[state.platform].specLabel;
+
+          renderOverlayInto(overlaySingle, state.platform);
+        } else {
+          singleViewContainer.classList.add('hidden');
+          singleViewContainer.classList.remove('flex');
+          comparisonViewContainer.classList.remove('hidden');
+          comparisonViewContainer.classList.add('grid');
+
+          singlePlatformTabs.classList.add('hidden');
+          singlePlatformTabs.classList.remove('flex');
+          comparisonHeaderLabel.classList.remove('hidden');
+          comparisonHeaderLabel.classList.add('flex');
+          activeSpecSummary.textContent = 'Synchronized 9:16 Comparison';
+
+          renderOverlayInto(overlayTikTok, 'tiktok');
+          renderOverlayInto(overlayReels, 'reels');
+          renderOverlayInto(overlayShorts, 'shorts');
+        }
+
+        renderMediaToCanvases();
+      }
+
+      /* Bind workspace control events */
+      viewModeBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.viewMode = btn.getAttribute('data-view-mode');
+          updateOverlaysAndStageUI();
+        });
+      });
+
+      overlayStyleBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.overlayStyle = btn.getAttribute('data-overlay-style');
+          updateOverlaysAndStageUI();
+        });
+      });
+
+      platformTabBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.platform = btn.getAttribute('data-platform');
+          updateOverlaysAndStageUI();
+        });
+      });
+
+      opacitySlider.addEventListener('input', () => {
+        state.opacity = parseInt(opacitySlider.value, 10);
+        opacityReadout.textContent = state.opacity + '%';
+        updateOverlaysAndStageUI();
+      });
+
+      universalSafeToggle.addEventListener('click', () => {
+        state.universalSafe = !state.universalSafe;
+        universalSafeToggle.setAttribute('aria-checked', String(state.universalSafe));
+        if (state.universalSafe) {
+          universalSafeToggle.classList.remove('bg-slate-300', 'dark:bg-slate-700');
+          universalSafeToggle.classList.add('bg-emerald-600');
+          universalSafeKnob.classList.remove('translate-x-0');
+          universalSafeKnob.classList.add('translate-x-5');
+        } else {
+          universalSafeToggle.classList.add('bg-slate-300', 'dark:bg-slate-700');
+          universalSafeToggle.classList.remove('bg-emerald-600');
+          universalSafeKnob.classList.add('translate-x-0');
+          universalSafeKnob.classList.remove('translate-x-5');
+        }
+        updateOverlaysAndStageUI();
+      });
+
+      /* -------------------------------------------------------------------
+         10. OFFSCREEN CANVAS PNG PROOF EXPORTER
+         ------------------------------------------------------------------- */
+      function drawOverlayOnExportCanvas(ctx, platformKey, ox, oy, w, h) {
+        const p = PLATFORMS[platformKey];
+        const alpha = state.opacity / 100;
+
+        ctx.save();
+        ctx.translate(ox, oy);
+
+        // Draw Red Danger Zones (in 'red' or 'hybrid' mode)
+        if (state.overlayStyle === 'red' || state.overlayStyle === 'hybrid') {
+          const topH = (p.topPct / 100) * h;
+          const rightW = (p.rightPct / 100) * w;
+          const rightTop = (p.rightTopPct / 100) * h;
+          const rightH = ((p.rightBottomPct - p.rightTopPct) / 100) * h;
+          const botH = (p.bottomPct / 100) * h;
+
+          ctx.fillStyle = 'rgba(239, 68, 68, ' + alpha.toFixed(2) + ')';
+          ctx.fillRect(0, 0, w, topH);
+          ctx.fillRect(w - rightW, rightTop, rightW, rightH);
+          ctx.fillRect(0, h - botH, w, botH);
+
+          // Dashed boundaries
+          ctx.strokeStyle = 'rgba(248, 113, 113, 0.95)';
+          ctx.lineWidth = 4;
+          ctx.setLineDash([14, 10]);
+
+          ctx.beginPath();
+          ctx.moveTo(0, topH);
+          ctx.lineTo(w, topH);
+          ctx.stroke();
+
+          ctx.strokeRect(w - rightW, rightTop, rightW, rightH);
+
+          ctx.beginPath();
+          ctx.moveTo(0, h - botH);
+          ctx.lineTo(w, h - botH);
+          ctx.stroke();
+
+          ctx.setLineDash([]);
+
+          // Micro-labels (rendered ONLY in 'red' mode so Hybrid UI icons remain unobstructed)
+          if (state.overlayStyle === 'red') {
+            function drawLabelBadge(text, cx, cy, rotate) {
+              ctx.save();
+              ctx.translate(cx, cy);
+              if (rotate) ctx.rotate(-Math.PI / 2);
+              ctx.font = '600 26px "Plus Jakarta Sans", sans-serif';
+              const tw = ctx.measureText(text).width + 28;
+              ctx.fillStyle = 'rgba(69, 10, 10, 0.85)';
+              ctx.beginPath();
+              ctx.roundRect(-tw / 2, -22, tw, 44, 8);
+              ctx.fill();
+              ctx.fillStyle = '#ffffff';
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              ctx.fillText(text, 0, 1);
+              ctx.restore();
+            }
+
+            drawLabelBadge('Top UI (' + p.topPct + '%)', w / 2, topH / 2, false);
+            drawLabelBadge('Engagement Icons', w - rightW / 2, rightTop + rightH / 2, true);
+            drawLabelBadge(
+              platformKey === 'shorts' ? 'Channel, Title & Scrubber (' + p.bottomPct + '%)' : 'Caption & Audio Zone (' + p.bottomPct + '%)',
+              w / 2,
+              h - botH / 2,
+              false
+            );
+          }
+        }
+
+        // Draw Realistic UI elements (in 'mockup' or 'hybrid' mode)
+        if (state.overlayStyle === 'mockup' || state.overlayStyle === 'hybrid') {
+          const uiAlpha = state.overlayStyle === 'hybrid' ? Math.min(1, alpha + 0.35) : Math.min(1, alpha + 0.45);
+          ctx.save();
+          ctx.globalAlpha = uiAlpha;
+
+          if (state.overlayStyle === 'mockup') {
+            const topScrim = ctx.createLinearGradient(0, 0, 0, h * 0.16);
+            topScrim.addColorStop(0, 'rgba(0,0,0,0.55)');
+            topScrim.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = topScrim;
+            ctx.fillRect(0, 0, w, h * 0.16);
+
+            const botScrim = ctx.createLinearGradient(0, h * 0.72, 0, h);
+            botScrim.addColorStop(0, 'rgba(0,0,0,0)');
+            botScrim.addColorStop(1, 'rgba(0,0,0,0.82)');
+            ctx.fillStyle = botScrim;
+            ctx.fillRect(0, h * 0.72, w, h * 0.28);
+          }
+
+          ctx.fillStyle = '#ffffff';
+          ctx.strokeStyle = '#ffffff';
+          ctx.textBaseline = 'middle';
+
+          // Top bar UI
+          ctx.font = '700 34px "Plus Jakarta Sans", sans-serif';
+          ctx.textAlign = 'center';
+          if (platformKey === 'tiktok') {
+            ctx.fillText('Following  |  For You', w / 2, h * 0.08);
+          } else if (platformKey === 'reels') {
+            ctx.textAlign = 'left';
+            ctx.fillText('Reels', 48, h * 0.055);
+          } else {
+            ctx.textAlign = 'left';
+            ctx.fillText('Shorts', 48, h * 0.05);
+          }
+
+          // Right action column circles/icons
+          const rx = w - (w * (p.rightPct / 100)) / 2;
+          const rStart = (p.rightTopPct / 100) * h + 56;
+          const rEnd = (p.rightBottomPct / 100) * h - 48;
+          const count = 5;
+          const step = (rEnd - rStart) / (count - 1);
+          for (let i = 0; i < count; i++) {
+            const cy = rStart + i * step;
+            ctx.beginPath();
+            ctx.arc(rx, cy, 30, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
+            ctx.fill();
+            ctx.lineWidth = 3;
+            ctx.stroke();
+          }
+
+          // Bottom caption block & navbar
+          const botY = h - (p.bottomPct / 100) * h;
+          ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'left';
+          ctx.font = '700 32px "Plus Jakarta Sans", sans-serif';
+          ctx.fillText(platformKey === 'shorts' ? '@CreatorStudio' : '@creator.studio', 44, botY + 56);
+          ctx.font = '400 26px "Plus Jakarta Sans", sans-serif';
+          ctx.fillText('Sample caption & hashtag overlay check zone', 44, botY + 108);
+          ctx.fillText('♪ Original Audio - creator.studio', 44, botY + 154);
+
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
+          ctx.fillRect(0, h - 84, w, 84);
+          if (platformKey === 'shorts') {
+            ctx.fillStyle = '#dc2626';
+            ctx.fillRect(0, h - 88, w * 0.58, 4);
+          }
+          ctx.fillStyle = '#ffffff';
+          ctx.font = '600 24px "Plus Jakarta Sans", sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('Home      Discover      +      Inbox      Profile', w / 2, h - 42);
+
+          ctx.restore();
+        }
+
+        // Draw Universal Safe Box if active
+        if (state.universalSafe) {
+          const sx = 0.02 * w;
+          const sy = 0.11 * h;
+          const sw = (1 - 0.02 - 0.15) * w;
+          const sh = (1 - 0.11 - 0.20) * h;
+
+          ctx.fillStyle = 'rgba(16, 185, 129, 0.08)';
+          ctx.fillRect(sx, sy, sw, sh);
+
+          ctx.strokeStyle = '#10b981';
+          ctx.lineWidth = 5;
+          ctx.setLineDash([18, 12]);
+          ctx.strokeRect(sx, sy, sw, sh);
+          ctx.setLineDash([]);
+
+          ctx.fillStyle = 'rgba(6, 78, 59, 0.9)';
+          ctx.beginPath();
+          ctx.roundRect(sx + 24, sy + 24, 300, 52, 10);
+          ctx.fill();
+          ctx.fillStyle = '#6ee7b7';
+          ctx.font = '600 26px "Plus Jakarta Sans", sans-serif';
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('Universal Safe Zone', sx + 44, sy + 50);
+        }
+
+        ctx.restore();
+      }
+
+      exportPngBtn.addEventListener('click', () => {
+        const exportCanvas = document.createElement('canvas');
+        const ctx = exportCanvas.getContext('2d');
+
+        if (state.viewMode === 'single') {
+          exportCanvas.width = EXPORT_W;
+          exportCanvas.height = EXPORT_H;
+
+          // Base dark studio grid if no media loaded
+          if (!drawSourceContained(ctx, EXPORT_W, EXPORT_H)) {
+            ctx.fillStyle = '#090c12';
+            ctx.fillRect(0, 0, EXPORT_W, EXPORT_H);
+          }
+
+          drawOverlayOnExportCanvas(ctx, state.platform, 0, 0, EXPORT_W, EXPORT_H);
+          triggerDownload(exportCanvas, 'safezone-' + state.platform + '-check.png');
+        } else {
+          // 3-column comparison export (3480 x 2100)
+          const pad = 60;
+          const headerH = 90;
+          exportCanvas.width = EXPORT_W * 3 + pad * 4;
+          exportCanvas.height = EXPORT_H + pad * 2 + headerH;
+
+          ctx.fillStyle = '#0b0e14';
+          ctx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+
+          const order = ['tiktok', 'reels', 'shorts'];
+          order.forEach((pKey, idx) => {
+            const ox = pad + idx * (EXPORT_W + pad);
+            const oy = pad + headerH;
+
+            // Column title
+            ctx.fillStyle = '#f8fafc';
+            ctx.font = '700 40px "Plus Jakarta Sans", sans-serif';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(PLATFORMS[pKey].name, ox, pad + 35);
+
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '500 26px "JetBrains Mono", monospace';
+            ctx.textAlign = 'right';
+            ctx.fillText(PLATFORMS[pKey].specLabel, ox + EXPORT_W, pad + 35);
+
+            // Draw media into temporary tile canvas so offsets remain clean
+            const tile = document.createElement('canvas');
+            tile.width = EXPORT_W;
+            tile.height = EXPORT_H;
+            const tCtx = tile.getContext('2d');
+            if (!drawSourceContained(tCtx, EXPORT_W, EXPORT_H)) {
+              tCtx.fillStyle = '#090c12';
+              tCtx.fillRect(0, 0, EXPORT_W, EXPORT_H);
+            }
+            ctx.drawImage(tile, ox, oy);
+            drawOverlayOnExportCanvas(ctx, pKey, ox, oy, EXPORT_W, EXPORT_H);
+
+            ctx.strokeStyle = '#334155';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(ox, oy, EXPORT_W, EXPORT_H);
+          });
+
+          triggerDownload(exportCanvas, 'safezone-comparison-check.png');
+        }
+      });
+
+      function triggerDownload(canvas, filename) {
+        const link = document.createElement('a');
+        link.download = filename;
+        link.href = canvas.toDataURL('image/png');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      /* -------------------------------------------------------------------
+         11. INTERACTIVE FAQ ACCORDION
+         ------------------------------------------------------------------- */
+      document.querySelectorAll('.faq-trigger').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+          const panelId = btn.getAttribute('aria-controls');
+          const panel = document.getElementById(panelId);
+          const chevron = btn.querySelector('.faq-chevron');
+
+          btn.setAttribute('aria-expanded', String(!isExpanded));
+          if (panel) {
+            panel.classList.toggle('hidden', isExpanded);
+          }
+          if (chevron) {
+            chevron.classList.toggle('rotate-180', !isExpanded);
+          }
+        });
+      });
+
+      /* -------------------------------------------------------------------
+         12. INITIALIZATION
+         ------------------------------------------------------------------- */
+      updateOverlaysAndStageUI();
+    })();
+  </script>
+</body>
+</html>
+
